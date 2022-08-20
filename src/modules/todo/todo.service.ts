@@ -16,4 +16,11 @@ export class TodoService {
   findOne(id: number): Promise<Todo> {
     return this.todoRepository.findOneBy({ id });
   }
+
+  findByQuery(skip: number, take: number): Promise<Todo[]> {
+    return this.todoRepository.find({
+      skip,
+      take
+    });
+  }
 }

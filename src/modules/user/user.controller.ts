@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../../entities/user.entity';
 
@@ -12,7 +12,15 @@ export class UserController {
   }
 
   @Get(':id')
-  getOneById(@Param('id', ParseIntPipe) id: number) {
+  getOneById(@Param('id', ParseIntPipe) id: number): Promise<User> {
     return this.userService.findOne(id);
+  }
+
+  @Get()
+  findByQuery(
+    @Query('skip', ParseIntPipe) skip: number,
+    @Query('take', ParseIntPipe) take: number
+  ): Promise<User[]> {
+    return this.userService.findByQuery(skip, take);
   }
 }

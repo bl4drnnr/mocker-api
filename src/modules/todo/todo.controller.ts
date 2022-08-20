@@ -1,4 +1,4 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { Todo } from '../../entities/todo.entity';
 
@@ -14,5 +14,13 @@ export class TodoController {
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number): Promise<Todo> {
     return this.todoService.findOne(id);
+  }
+
+  @Get()
+  findByQuery(
+    @Query('skip', ParseIntPipe) skip: number,
+    @Query('take', ParseIntPipe) take: number
+  ): Promise<Todo[]> {
+    return this.todoService.findByQuery(skip, take);
   }
 }

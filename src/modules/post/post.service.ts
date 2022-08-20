@@ -16,4 +16,11 @@ export class PostService {
   findOne(id: number): Promise<Post> {
     return this.postRepository.findOneBy({ id });
   }
+
+  findByQuery(skip: number, take: number): Promise<Post[]> {
+    return this.postRepository.find({
+      skip,
+      take
+    });
+  }
 }
