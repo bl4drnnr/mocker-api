@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user.entity';
 
 @Entity()
-export class Post {
+export class Todo {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -11,15 +11,8 @@ export class Post {
   })
   title: string;
 
-  @Column({
-    nullable: false
-  })
-  content: string;
+  @Column('boolean', { default: false })
+  completed: boolean;
 
-  @Column({
-    nullable: false
-  })
-  preview: string;
-
-  @ManyToOne(() => User, (user) => user.posts) user: User;
+  @ManyToOne(() => User, (user) => user.todos) user: User[];
 }

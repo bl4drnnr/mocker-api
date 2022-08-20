@@ -4,6 +4,7 @@ import { User } from './entities/user.entity';
 import { Post } from './entities/post.entity';
 import { PostModule } from './modules/post/post.module';
 import { UserModule } from './modules/user/user.module';
+import { TodoModule } from './modules/todo/todo.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { UserModule } from './modules/user/user.module';
       entities: [User, Post]
     }),
     PostModule,
-    UserModule
+    UserModule,
+    TodoModule
   ]
 })
 export class AppModule {}

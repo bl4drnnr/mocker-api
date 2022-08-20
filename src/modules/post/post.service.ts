@@ -9,7 +9,11 @@ export class PostService {
     @InjectRepository(Post) private postRepository: Repository<Post>
   ) {}
 
-  findOne(id: number) {
+  findAll(): Promise<Post[]> {
+    return this.postRepository.find();
+  }
+
+  findOne(id: number): Promise<Post> {
     return this.postRepository.findOneBy({ id });
   }
 }
