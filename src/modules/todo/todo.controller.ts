@@ -1,6 +1,7 @@
 import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { Todo } from '../../entities/todo.entity';
+import { QueryDto } from '../../dto/query.dto';
 
 @Controller('todo')
 export class TodoController {
@@ -18,9 +19,7 @@ export class TodoController {
 
   @Get()
   findByQuery(
-    @Query('skip', ParseIntPipe) skip: number,
-    @Query('take', ParseIntPipe) take: number,
-    @Query('count') count?: boolean
+    @Query() { skip, take, count }: QueryDto
   ): Promise<Todo[] | { rows: Todo[]; count: number }> {
     return this.todoService.findByQuery(skip, take, count);
   }

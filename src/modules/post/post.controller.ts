@@ -1,6 +1,7 @@
 import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { PostService } from './post.service';
 import { Post, Post as PostEntity } from '../../entities/post.entity';
+import { QueryDto } from '../../dto/query.dto';
 
 @Controller('post')
 export class PostController {
@@ -18,9 +19,7 @@ export class PostController {
 
   @Get()
   findByQuery(
-    @Query('skip', ParseIntPipe) skip: number,
-    @Query('take', ParseIntPipe) take: number,
-    @Query('count') count?: boolean
+    @Query() { skip, take, count }: QueryDto
   ): Promise<Post[] | { rows: Post[]; count: number }> {
     return this.postService.findByQuery(skip, take, count);
   }

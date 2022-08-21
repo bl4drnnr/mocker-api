@@ -1,6 +1,7 @@
 import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../../entities/user.entity';
+import { QueryDto } from '../../dto/query.dto';
 
 @Controller('user')
 export class UserController {
@@ -18,9 +19,7 @@ export class UserController {
 
   @Get()
   findByQuery(
-    @Query('skip', ParseIntPipe) skip: number,
-    @Query('take', ParseIntPipe) take: number,
-    @Query('count') count?: boolean
+    @Query() { skip, take, count }: QueryDto
   ): Promise<User[] | { rows: User[]; count: number }> {
     return this.userService.findByQuery(skip, take, count);
   }
