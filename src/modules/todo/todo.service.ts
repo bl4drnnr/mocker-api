@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Todo } from '../../entities/todo.entity';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 
 @Injectable()
 export class TodoService {
@@ -22,16 +22,20 @@ export class TodoService {
     take: number,
     count: string
   ): Promise<Todo[] | { rows: Todo[]; count: number }> {
+    let options: FindManyOptions;
+
+    if ((skip || take) && (!skip || !take))
+      throw new HttpException(
+        'skip and take must be provided together',
+        HttpStatus.BAD_REQUEST
+      );
+    else options = { skip, take };
+
     if (count === 'true') {
-      const [rows, count] = await this.todoRepository.findAndCount({
-        skip,
-        take
-      });
+      const [rows, count] = await this.todoRepository.findAndCount(options);
       return { rows, count };
     }
-    return this.todoRepository.find({
-      skip,
-      take
-    });
+
+    return this.todoRepository.find(options);
   }
 }

@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from '../../entities/post.entity';
-import { Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 
 @Injectable()
 export class PostService {
@@ -22,16 +22,20 @@ export class PostService {
     take: number,
     count: string
   ): Promise<Post[] | { rows: Post[]; count: number }> {
+    let options: FindManyOptions;
+
+    if ((skip || take) && (!skip || !take))
+      throw new HttpException(
+        'skip and take must be provided together',
+        HttpStatus.BAD_REQUEST
+      );
+    else options = { skip, take };
+
     if (count === 'true') {
-      const [rows, count] = await this.postRepository.findAndCount({
-        skip,
-        take
-      });
+      const [rows, count] = await this.postRepository.findAndCount(options);
       return { rows, count };
     }
-    return this.postRepository.find({
-      skip,
-      take
-    });
+
+    return this.postRepository.find(options);
   }
 }

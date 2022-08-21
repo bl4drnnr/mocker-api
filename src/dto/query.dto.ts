@@ -3,12 +3,14 @@ import { IsBooleanString, IsNumber, IsOptional } from 'class-validator';
 
 export class QueryDto {
   @Transform(({ value }) => parseInt(value))
+  @IsOptional()
   @IsNumber()
-  skip: number;
+  skip?: number;
 
   @Transform(({ value }) => parseInt(value))
+  @IsOptional()
   @IsNumber()
-  take: number;
+  take?: number;
 
   @IsOptional()
   @IsBooleanString()
