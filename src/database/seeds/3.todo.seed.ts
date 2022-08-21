@@ -20,8 +20,10 @@ export default class CreateTodos implements Seeder {
         { title: 'Pay bills', completed: true, user: () => '5' },
         { title: 'Look for new job', completed: true, user: () => '7' },
         { title: 'Buy crypto', completed: true, user: () => '7' },
-        { title: 'Sell crypto', completed: true, user: () => '7' },
-        { title: 'Go for a walk', completed: true, user: () => '7' }
+        { title: 'Sell crypto', completed: true, user: () => '2' },
+        { title: 'Go for a walk', completed: true, user: () => '1' },
+        { title: 'Eat avocado', completed: true, user: () => '2' },
+        { title: 'Clean computer', completed: true, user: () => '1' }
       ])
       .execute();
   }

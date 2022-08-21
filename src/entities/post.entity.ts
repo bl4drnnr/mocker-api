@@ -12,7 +12,8 @@ export class Post {
   title: string;
 
   @Column({
-    nullable: false
+    nullable: false,
+    length: 512
   })
   content: string;
 

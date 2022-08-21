@@ -5,11 +5,12 @@ import { PostModule } from './modules/post/post.module';
 import { UserModule } from './modules/user/user.module';
 import { TodoModule } from './modules/todo/todo.module';
 import { typeOrmAsyncConfig } from './database/typeorm.config';
+import configuration from './config/configuration';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: `.env.${process.env.NODE_ENV}`
+      load: [configuration]
     }),
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
     PostModule,
