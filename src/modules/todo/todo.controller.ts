@@ -6,7 +6,7 @@ import { Todo } from '../../entities/todo.entity';
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
-  @Get()
+  @Get('list')
   findAll(): Promise<Todo[]> {
     return this.todoService.findAll();
   }

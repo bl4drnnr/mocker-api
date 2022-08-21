@@ -6,7 +6,7 @@ import { Post as PostEntity } from '../../entities/post.entity';
 export class PostController {
   constructor(private postService: PostService) {}
 
-  @Get()
+  @Get('list')
   findAll(): Promise<PostEntity[]> {
     return this.postService.findAll();
   }

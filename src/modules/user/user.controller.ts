@@ -6,7 +6,7 @@ import { User } from '../../entities/user.entity';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Get()
+  @Get('list')
   findAll(): Promise<User[]> {
     return this.userService.findAll();
   }
