@@ -9,7 +9,7 @@ import { typeOrmAsyncConfig } from './database/typeorm.config';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env'
+      envFilePath: `.env.${process.env.NODE_ENV}`
     }),
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
     PostModule,

@@ -20,7 +20,7 @@ export class UserController {
   findByQuery(
     @Query('skip', ParseIntPipe) skip: number,
     @Query('take', ParseIntPipe) take: number,
-    @Query('count') count: boolean
+    @Query('count') count?: boolean
   ): Promise<User[] | { rows: User[]; count: number }> {
     return this.userService.findByQuery(skip, take, count);
   }
