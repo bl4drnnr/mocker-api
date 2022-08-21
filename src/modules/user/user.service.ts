@@ -20,9 +20,9 @@ export class UserService {
   async findByQuery(
     skip: number,
     take: number,
-    count: boolean
+    count: string
   ): Promise<User[] | { rows: User[]; count: number }> {
-    if (count) {
+    if (count === 'true') {
       const [rows, count] = await this.userRepository.findAndCount({
         skip,
         take

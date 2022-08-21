@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
+import { IsBooleanString, IsNumber, IsOptional } from 'class-validator';
 
 export class QueryDto {
   @Transform(({ value }) => parseInt(value))
@@ -10,10 +10,7 @@ export class QueryDto {
   @IsNumber()
   take: number;
 
-  @Transform(({ value }) => {
-    return value === 'true';
-  })
   @IsOptional()
-  @IsBoolean()
-  count?: boolean;
+  @IsBooleanString()
+  count?: string;
 }

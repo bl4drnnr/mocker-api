@@ -20,9 +20,9 @@ export class PostService {
   async findByQuery(
     skip: number,
     take: number,
-    count: boolean
+    count: string
   ): Promise<Post[] | { rows: Post[]; count: number }> {
-    if (count) {
+    if (count === 'true') {
       const [rows, count] = await this.postRepository.findAndCount({
         skip,
         take

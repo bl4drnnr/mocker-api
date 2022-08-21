@@ -20,9 +20,9 @@ export class TodoService {
   async findByQuery(
     skip: number,
     take: number,
-    count: boolean
+    count: string
   ): Promise<Todo[] | { rows: Todo[]; count: number }> {
-    if (count) {
+    if (count === 'true') {
       const [rows, count] = await this.todoRepository.findAndCount({
         skip,
         take
