@@ -2,15 +2,17 @@ import { Transform } from 'class-transformer';
 import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
 export class QueryDto {
-  @Transform(({ value: skip }) => parseInt(skip))
+  @Transform(({ value }) => parseInt(value))
   @IsNumber()
   skip: number;
 
-  @Transform(({ value: take }) => parseInt(take))
+  @Transform(({ value }) => parseInt(value))
   @IsNumber()
   take: number;
 
-  @Transform(({ value: count }) => count === 'true')
+  @Transform(({ value }) => {
+    return value === 'true';
+  })
   @IsOptional()
   @IsBoolean()
   count?: boolean;
