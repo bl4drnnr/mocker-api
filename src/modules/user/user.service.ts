@@ -17,7 +17,18 @@ export class UserService {
     return this.userRepository.findOneBy({ id });
   }
 
-  findByQuery(skip: number, take: number): Promise<User[]> {
+  async findByQuery(
+    skip: number,
+    take: number,
+    count: boolean
+  ): Promise<User[] | { rows: User[]; count: number }> {
+    if (count) {
+      const [rows, count] = await this.userRepository.findAndCount({
+        skip,
+        take
+      });
+      return { rows, count };
+    }
     return this.userRepository.find({
       skip,
       take

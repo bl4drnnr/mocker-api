@@ -17,7 +17,18 @@ export class PostService {
     return this.postRepository.findOneBy({ id });
   }
 
-  findByQuery(skip: number, take: number): Promise<Post[]> {
+  async findByQuery(
+    skip: number,
+    take: number,
+    count: boolean
+  ): Promise<Post[] | { rows: Post[]; count: number }> {
+    if (count) {
+      const [rows, count] = await this.postRepository.findAndCount({
+        skip,
+        take
+      });
+      return { rows, count };
+    }
     return this.postRepository.find({
       skip,
       take
