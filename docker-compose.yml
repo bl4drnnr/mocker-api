@@ -1,13 +1,40 @@
 version: '3.8'
+
 services:
-  db:
-    image: mysql
-    container_name: fakeapi
+  api:
+    container_name: mocker-api
     restart: always
+    build:
+      context: .
+      target: development
+      dockerfile: ./Dockerfile
+    env_file:
+      - .env.development
+    command: npm run start:dev
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
     ports:
-      - "3306:3306"
+      - "3000:3000"
+    depends_on:
+      - database
+    networks:
+      - mocker-network
+  database:
+    image: postgres
+    container_name: mocker-db
+    restart: always
     environment:
-      MYSQL_DATABASE: fakeapi
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mocker
+    ports:
+      - "5432:5432"
+    volumes:
+      - /:/data/postgres
+    networks:
+      - mocker-network
+
+networks:
+  mocker-network:
+    driver: bridge
