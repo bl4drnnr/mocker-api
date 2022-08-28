@@ -36,5 +36,5 @@ export class Todo {
   })
   updatedAt: Date;
 
-  @ManyToOne(() => User, (user) => user.todos) user: User[];
+  @ManyToOne(() => User, (user) => user.todos) user: User;
 }

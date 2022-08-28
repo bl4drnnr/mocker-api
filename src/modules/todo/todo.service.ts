@@ -9,13 +9,28 @@ export class TodoService {
     @InjectRepository(Todo) private todoRepository: Repository<Todo>
   ) {}
 
-  findAll({ dates }: { dates: boolean }): Promise<Todo[]> {
-    if (!dates)
-      return this.todoRepository
-        .createQueryBuilder('todo')
-        .select(['todo.id', 'todo.title', 'todo.completed'])
-        .getMany();
-    return this.todoRepository.find();
+  async findAll({ dates }: { dates: boolean }): Promise<Todo[]> {
+    const todos = await this.todoRepository.find({
+      relations: {
+        user: true
+      },
+      select: {
+        id: true,
+        title: true,
+        completed: true,
+        createdAt: dates,
+        updatedAt: dates,
+        user: {
+          id: true
+        }
+      }
+    });
+
+    return todos.map((item) => {
+      item['userId'] = item.user.id;
+      delete item.user;
+      return item;
+    });
   }
 
   findOne(id: number): Promise<Todo> {

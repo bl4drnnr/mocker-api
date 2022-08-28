@@ -9,13 +9,29 @@ export class PostService {
     @InjectRepository(Post) private postRepository: Repository<Post>
   ) {}
 
-  findAll({ dates }: { dates: boolean }): Promise<Post[]> {
-    if (!dates)
-      return this.postRepository
-        .createQueryBuilder('post')
-        .select(['post.id', 'post.title', 'post.content', 'post.preview'])
-        .getMany();
-    return this.postRepository.find();
+  async findAll({ dates }: { dates: boolean }): Promise<Post[]> {
+    const posts = await this.postRepository.find({
+      relations: {
+        user: true
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        preview: true,
+        createdAt: dates,
+        updatedAt: dates,
+        user: {
+          id: true
+        }
+      }
+    });
+
+    return posts.map((item) => {
+      item['userId'] = item.user.id;
+      delete item.user;
+      return item;
+    });
   }
 
   findOne(id: number): Promise<Post> {
