@@ -1,7 +1,8 @@
-import {IsBooleanString, IsOptional} from "class-validator";
+import { IsBoolean } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class DatesDto {
-  @IsOptional()
-  @IsBooleanString()
-  dates: string;
+  @IsBoolean()
+  @Transform(({ value }) => value === 'true')
+  dates?: boolean;
 }

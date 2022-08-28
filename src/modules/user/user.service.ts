@@ -9,15 +9,13 @@ export class UserService {
     @InjectRepository(User) private userRepository: Repository<User>
   ) {}
 
-  async findAll({ dates }: { dates: string }): Promise<User[]> {
-    if (dates === 'true') {
-      return this.userRepository.find();
-    } else {
+  async findAll({ dates }: { dates: boolean }): Promise<User[]> {
+    if (dates)
       return this.userRepository
         .createQueryBuilder('user')
         .select(['user.id', 'user.firstName', 'user.lastName'])
         .getMany();
-    }
+    else return this.userRepository.find();
   }
 
   findOne(id: number): Promise<User> {
@@ -27,7 +25,7 @@ export class UserService {
   async findByQuery(
     skip: number,
     take: number,
-    count: string
+    count: boolean
   ): Promise<User[] | { rows: User[]; count: number }> {
     let options: FindManyOptions;
 
@@ -38,7 +36,7 @@ export class UserService {
       );
     else options = { skip, take };
 
-    if (count === 'true') {
+    if (count) {
       const [rows, count] = await this.userRepository.findAndCount(options);
       return { rows, count };
     }

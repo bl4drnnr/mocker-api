@@ -20,7 +20,7 @@ export class TodoService {
   async findByQuery(
     skip: number,
     take: number,
-    count: string
+    count: boolean
   ): Promise<Todo[] | { rows: Todo[]; count: number }> {
     let options: FindManyOptions;
 
@@ -31,7 +31,7 @@ export class TodoService {
       );
     else options = { skip, take };
 
-    if (count === 'true') {
+    if (count) {
       const [rows, count] = await this.todoRepository.findAndCount(options);
       return { rows, count };
     }
