@@ -2,14 +2,15 @@ import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../../entities/user.entity';
 import { QueryDto } from '../../dto/query.dto';
+import { DatesDto } from '../../dto/dates.dto';
 
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('list')
-  findAll(): Promise<User[]> {
-    return this.userService.findAll();
+  findAll(@Query() { dates }: DatesDto): Promise<User[]> {
+    return this.userService.findAll({ dates });
   }
 
   @Get(':id')

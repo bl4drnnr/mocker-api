@@ -9,8 +9,15 @@ export class UserService {
     @InjectRepository(User) private userRepository: Repository<User>
   ) {}
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find();
+  async findAll({ dates }: { dates: string }): Promise<User[]> {
+    if (dates === 'true') {
+      return this.userRepository.find();
+    } else {
+      return this.userRepository
+        .createQueryBuilder('user')
+        .select(['user.id', 'user.firstName', 'user.lastName'])
+        .getMany();
+    }
   }
 
   findOne(id: number): Promise<User> {
