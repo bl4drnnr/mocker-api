@@ -2,14 +2,15 @@ import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { Todo } from '../../entities/todo.entity';
 import { QueryDto } from '../../dto/query.dto';
+import { DatesDto } from '../../dto/dates.dto';
 
 @Controller('todo')
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
   @Get('list')
-  findAll(): Promise<Todo[]> {
-    return this.todoService.findAll();
+  findAll(@Query() { dates }: DatesDto): Promise<Todo[]> {
+    return this.todoService.findAll({ dates });
   }
 
   @Get(':id')

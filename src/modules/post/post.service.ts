@@ -9,7 +9,12 @@ export class PostService {
     @InjectRepository(Post) private postRepository: Repository<Post>
   ) {}
 
-  findAll(): Promise<Post[]> {
+  findAll({ dates }: { dates: boolean }): Promise<Post[]> {
+    if (!dates)
+      return this.postRepository
+        .createQueryBuilder('post')
+        .select(['post.id', 'post.title', 'post.content', 'post.preview'])
+        .getMany();
     return this.postRepository.find();
   }
 

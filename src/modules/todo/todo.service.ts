@@ -9,7 +9,12 @@ export class TodoService {
     @InjectRepository(Todo) private todoRepository: Repository<Todo>
   ) {}
 
-  findAll(): Promise<Todo[]> {
+  findAll({ dates }: { dates: boolean }): Promise<Todo[]> {
+    if (!dates)
+      return this.todoRepository
+        .createQueryBuilder('todo')
+        .select(['todo.id', 'todo.title', 'todo.completed'])
+        .getMany();
     return this.todoRepository.find();
   }
 

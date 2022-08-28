@@ -10,7 +10,7 @@ export class UserService {
   ) {}
 
   async findAll({ dates }: { dates: boolean }): Promise<User[]> {
-    if (dates)
+    if (!dates)
       return this.userRepository
         .createQueryBuilder('user')
         .select(['user.id', 'user.firstName', 'user.lastName'])
