@@ -61,7 +61,7 @@ export class PostService {
   }
 
   async getUserPosts(userId: number): Promise<Post[]> {
-    return this.postRepository.find({
+    const posts = await this.postRepository.find({
       relations: {
         user: true
       },
@@ -78,6 +78,11 @@ export class PostService {
         createdAt: true,
         updatedAt: true
       }
+    });
+
+    return posts.map((item) => {
+      delete item.user;
+      return item;
     });
   }
 }

@@ -60,7 +60,7 @@ export class TodoService {
   }
 
   async getUserTodos(userId: number): Promise<Todo[]> {
-    return this.todoRepository.find({
+    const todos = await this.todoRepository.find({
       relations: {
         user: true
       },
@@ -76,6 +76,11 @@ export class TodoService {
         createdAt: true,
         updatedAt: true
       }
+    });
+
+    return todos.map((item) => {
+      delete item.user;
+      return item;
     });
   }
 }
