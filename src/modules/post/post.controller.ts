@@ -24,4 +24,9 @@ export class PostController {
   ): Promise<Post[] | { rows: Post[]; count: number }> {
     return this.postService.findByQuery(skip, take, count);
   }
+
+  @Get('user/:userId')
+  getUserPosts(@Param('userId', ParseIntPipe) userId: number): Promise<Post[]> {
+    return this.postService.getUserPosts(userId);
+  }
 }

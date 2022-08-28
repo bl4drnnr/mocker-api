@@ -24,4 +24,9 @@ export class TodoController {
   ): Promise<Todo[] | { rows: Todo[]; count: number }> {
     return this.todoService.findByQuery(skip, take, count);
   }
+
+  @Get('user/:userId')
+  getUserTodos(@Param('userId', ParseIntPipe) userId: number): Promise<Todo[]> {
+    return this.todoService.getUserTodos(userId);
+  }
 }

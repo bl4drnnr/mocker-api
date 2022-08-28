@@ -58,4 +58,24 @@ export class TodoService {
 
     return this.todoRepository.find(options);
   }
+
+  async getUserTodos(userId: number): Promise<Todo[]> {
+    return this.todoRepository.find({
+      relations: {
+        user: true
+      },
+      where: {
+        user: {
+          id: userId
+        }
+      },
+      select: {
+        id: true,
+        title: true,
+        completed: true,
+        createdAt: true,
+        updatedAt: true
+      }
+    });
+  }
 }

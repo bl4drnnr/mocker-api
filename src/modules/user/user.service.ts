@@ -10,12 +10,18 @@ export class UserService {
   ) {}
 
   async findAll({ dates }: { dates: boolean }): Promise<User[]> {
-    if (!dates)
-      return this.userRepository
-        .createQueryBuilder('user')
-        .select(['user.id', 'user.firstName', 'user.lastName'])
-        .getMany();
-    else return this.userRepository.find();
+    const withDates = [];
+    if (dates) withDates.push('');
+
+    return await this.userRepository.find({
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        createdAt: dates,
+        updatedAt: dates
+      }
+    });
   }
 
   findOne(id: number): Promise<User> {

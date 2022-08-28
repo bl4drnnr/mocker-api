@@ -59,4 +59,25 @@ export class PostService {
 
     return this.postRepository.find(options);
   }
+
+  async getUserPosts(userId: number): Promise<Post[]> {
+    return this.postRepository.find({
+      relations: {
+        user: true
+      },
+      where: {
+        user: {
+          id: userId
+        }
+      },
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        preview: true,
+        createdAt: true,
+        updatedAt: true
+      }
+    });
+  }
 }
