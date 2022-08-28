@@ -5,6 +5,7 @@ import { PostModule } from './modules/post/post.module';
 import { UserModule } from './modules/user/user.module';
 import { TodoModule } from './modules/todo/todo.module';
 import { typeOrmAsyncConfig } from './database/typeorm.config';
+import { ImageModule } from './modules/image/image.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -15,7 +16,8 @@ import configuration from './config/configuration';
     TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
     PostModule,
     UserModule,
-    TodoModule
+    TodoModule,
+    ImageModule
   ]
 })
 export class AppModule {}
