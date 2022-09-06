@@ -6,6 +6,7 @@ import { UserModule } from './modules/user/user.module';
 import { TodoModule } from './modules/todo/todo.module';
 import { typeOrmAsyncConfig } from './database/typeorm.config';
 import { ImageModule } from './modules/image/image.module';
+import { SearchModule } from './modules/search/search.module';
 import configuration from './config/configuration';
 
 @Module({
@@ -17,7 +18,8 @@ import configuration from './config/configuration';
     PostModule,
     UserModule,
     TodoModule,
-    ImageModule
+    ImageModule,
+    SearchModule
   ]
 })
 export class AppModule {}
