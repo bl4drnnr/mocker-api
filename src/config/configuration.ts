@@ -4,5 +4,7 @@ export default () => ({
   DB_PORT: process.env.DB_PORT,
   DB_USERNAME: process.env.DB_USERNAME,
   DB_PASSWORD: process.env.DB_PASSWORD,
-  DB_DATABASE: process.env.DB_DATABASE
+  DB_DATABASE: process.env.DB_DATABASE,
+  API_BASIC_AUTH_USERNAME: process.env.API_BASIC_AUTH_USERNAME,
+  API_BASIC_AUTH_PASSWORD: process.env.API_BASIC_AUTH_PASSWORD
 });

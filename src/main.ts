@@ -14,6 +14,10 @@ async function bootstrap() {
     .setTitle('Mocker API')
     .setDescription('Mocker API documentation')
     .setVersion('1.0')
+    .addSecurity('basic', {
+      type: 'http',
+      scheme: 'basic'
+    })
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/api/docs', app, document);
