@@ -1,11 +1,13 @@
 import {
   Column,
   CreateDateColumn,
+  Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
+@Entity()
 export class Endpoint {
   @ApiProperty({
     description: 'Unique id',
